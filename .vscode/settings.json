@@ -1,0 +1,15 @@
+{
+    "makefile.extensionOutputFolder": "./.vscode",
+    "files.associations": {
+        "iostream": "cpp",
+        "variant": "cpp",
+        "__node_handle": "cpp",
+        "vector": "cpp",
+        "iosfwd": "cpp",
+        "iterator": "cpp",
+        "__locale": "cpp",
+        "locale": "cpp",
+        "__split_buffer": "cpp",
+        "utility": "cpp"
+    }
+}
