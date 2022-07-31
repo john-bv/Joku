@@ -45,6 +45,14 @@ enum TokenVariant: unsigned char {
      * Sometimes used in place to prevent errors.
      */
     END_OF_FILE = 8,
+    /**
+     * @brief Represents a comment. Specifically Inline or multiline.
+     */
+    COMMENT = 9,
+    /**
+     * @brief Represents a comment, one that is one line.
+     */
+    COMMENT_SINGLE = 10
 };
 
 class Token {
@@ -52,12 +60,11 @@ private:
     char* value;
     TokenVariant variant;
     int position;
-    // this can be null!
-    int buffer_id;
+    TokenBuffer *buffer;
 public:
     Token();
 
-    Token(char* value, TokenVariant variant, int position = -1, int buffer_id = 0);
+    Token(char* value, TokenVariant variant, int position = -1, TokenBuffer *buffer = nullptr);
 
     TokenVariant get_variant();
     void set_position(int position);
@@ -71,7 +78,6 @@ class TokenBuffer {
 private:
     std::vector<Token> tokens;
     Token previous_token;
-    int id;
     int current_position;
     /**
      * @brief Whether or not to consume tokens when calling next_token().
@@ -90,7 +96,7 @@ private:
         return pos < tokens.size();
     }
 public:
-    TokenBuffer(int id);
+    TokenBuffer();
     ~TokenBuffer();
 
     /**
@@ -116,7 +122,6 @@ public:
     void push(Token *token);
 
     int size();
-    int get_id();
 
     int get_position();
 };

@@ -2,17 +2,17 @@
 #include "lex/token.h"
 
 Token::Token() {
-    value = nullptr;
-    variant = ::END_OF_FILE;
-    position = 0;
-    buffer_id = 0;
+    this->value = nullptr;
+    this->variant = ::END_OF_FILE;
+    this->position = 0;
+    this->buffer = nullptr;
 }
 
-Token::Token(char* v, TokenVariant variant, int position, int buffer_id) {
-    value = v;
+Token::Token(char* v, TokenVariant variant, int position, TokenBuffer *buffer) {
+    this->value = v;
     this->variant = variant;
     this->position = position;
-    this->buffer_id = buffer_id;
+    this->buffer = buffer;
 }
 
 TokenVariant Token::get_variant() {
@@ -28,14 +28,13 @@ bool Token::is_null() {
 }
 
 int Token::belongs_to() {
-    return buffer_id;
+    return this->buffer == nullptr ? -1 : this->buffer->get_position();
 }
 
-TokenBuffer::TokenBuffer(int id) {
-    tokens = std::vector<Token>();
-    previous_token = Token();
-    id = id;
-    current_position = 0;
+TokenBuffer::TokenBuffer() {
+    this->tokens = std::vector<Token>();
+    this->previous_token = Token();
+    this->current_position = 0;
 }
 
 TokenBuffer::~TokenBuffer() {
@@ -85,10 +84,6 @@ void TokenBuffer::push(Token *token) {
 
 int TokenBuffer::size() {
     return this->tokens.size();
-}
-
-int TokenBuffer::get_id() {
-    return id;
 }
 
 int TokenBuffer::get_position() {

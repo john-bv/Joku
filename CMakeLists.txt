@@ -5,6 +5,7 @@ project(nvscript)
 set(SOURCES
     src/main.cpp
     src/compiler/lex/token.cpp
+    src/compiler/lex/tokenizer.cpp
 )
 
 add_executable(nvscript ${SOURCES})
