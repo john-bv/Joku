@@ -129,6 +129,30 @@ nvscript/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/nvscript.dir/build.make CMakeFiles/nvscript.dir/build
 .PHONY : nvscript/fast
 
+src/compiler/lex/token.o: src/compiler/lex/token.cpp.o
+.PHONY : src/compiler/lex/token.o
+
+# target to build an object file
+src/compiler/lex/token.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/nvscript.dir/build.make CMakeFiles/nvscript.dir/src/compiler/lex/token.cpp.o
+.PHONY : src/compiler/lex/token.cpp.o
+
+src/compiler/lex/token.i: src/compiler/lex/token.cpp.i
+.PHONY : src/compiler/lex/token.i
+
+# target to preprocess a source file
+src/compiler/lex/token.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/nvscript.dir/build.make CMakeFiles/nvscript.dir/src/compiler/lex/token.cpp.i
+.PHONY : src/compiler/lex/token.cpp.i
+
+src/compiler/lex/token.s: src/compiler/lex/token.cpp.s
+.PHONY : src/compiler/lex/token.s
+
+# target to generate assembly for a file
+src/compiler/lex/token.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/nvscript.dir/build.make CMakeFiles/nvscript.dir/src/compiler/lex/token.cpp.s
+.PHONY : src/compiler/lex/token.cpp.s
+
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
 
@@ -162,6 +186,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... nvscript"
+	@echo "... src/compiler/lex/token.o"
+	@echo "... src/compiler/lex/token.i"
+	@echo "... src/compiler/lex/token.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
