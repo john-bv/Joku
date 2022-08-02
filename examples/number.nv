@@ -1,0 +1,51 @@
+// Number Game
+use std.input
+
+attempts = 0
+number: int = rand(0, 100)
+
+fn game_loop(): void {
+    if ++attempts == 5 {
+        println("You lose! The number was: {number}!")
+        return play_again() ? game_loop() : exit;
+    }
+
+    guess: int = inputln("Enter your guess: ").parse<int>() !? {
+        return game_loop()
+    }
+
+    if guess > number {
+        println("Guess too high!")
+    }
+
+    if guess < number {
+        println("Guess too low!")
+    }
+
+    if guess == number {
+        println("You win!")
+
+        return play_again() ? game_loop() : exit;
+    }
+    return game_loop()
+}
+
+fn play_again(): bool {
+    choice = input("Play again? (Y/n): ").to_lowercase()
+
+    if choice.len() != 1 {
+        return play_again()
+    }
+
+    if choice == 'y' {
+        number = rand(0, 100)
+        attempt = 0
+
+        return true
+    } else if choice == 'n' {
+        return false
+    } else {
+        println("Invalid option! Choose one of 'y' or 'n'")
+        return play_again()
+    }
+}

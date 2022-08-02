@@ -2,6 +2,7 @@
 #define _TOKENSTREAM_H_
 
 #include "lex/token.h"
+#include <deque>
 
 class TokenStream
 {
@@ -19,6 +20,10 @@ class TokenStream
          */
         int id;
         /**
+         * @brief Whether or not to allow the token buffer to be resized. (externally)
+         */
+        bool allow_resize;
+        /**
          * @brief The last Token that was read.
          */
         Token last_token;
@@ -26,7 +31,7 @@ class TokenStream
          * @brief A dynamically allocated array of tokens.
          * This will change as the stream is parsed.
          */
-        std::vector<Token> tokens;
+        std::deque<Token> token_buffer;
 
     public:
         /**
@@ -37,9 +42,11 @@ class TokenStream
         /**
          * @brief Consumes the token in the stream, giving you the next token.
          */
-        void peek();
+        Token peek();
 
-        void peek(int amt);
+        TokenStream* peek(int amt);
+
+        void push(Token token);
 
         bool is_eof();
 
@@ -49,29 +56,31 @@ class TokenStream
          */
         int consumed();
 
+        int size();
+
         /**
          * @brief Return a token at given position ahead. (Null token if out of bounds)
          */
-        Token* nth();
+        Token *nth();
 
         /**
          * @brief Return the next token in the stream.
          */
         Token* nth(int n);
 
-        Token* first() {
+        Token *first() {
             return nth(0);
         }
 
-        Token* second() {
+        Token *second() {
             return nth(1);
         }
 
-        Token* third() {
+        Token *third() {
             return nth(2);
         }
 
-        TokenStream sub_token(int from, int to);
+        TokenStream *sub_token(int from, int to);
 
         /**
          * @brief Returns the tokens that are left in the stream.
