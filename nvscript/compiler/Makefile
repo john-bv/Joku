@@ -57,10 +57,10 @@ RM = /opt/homebrew/Cellar/cmake/3.23.3/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/john/Documents/Programming/Personal/nvscript
+CMAKE_SOURCE_DIR = /Users/john/Documents/Programming/Personal/nvscript/nvscript
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/john/Documents/Programming/Personal/nvscript
+CMAKE_BINARY_DIR = /Users/john/Documents/Programming/Personal/nvscript/nvscript
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,14 +87,14 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/john/Documents/Programming/Personal/nvscript/CMakeFiles /Users/john/Documents/Programming/Personal/nvscript//CMakeFiles/progress.marks
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/john/Documents/Programming/Personal/nvscript/CMakeFiles 0
+	cd /Users/john/Documents/Programming/Personal/nvscript/nvscript && $(CMAKE_COMMAND) -E cmake_progress_start /Users/john/Documents/Programming/Personal/nvscript/nvscript/CMakeFiles /Users/john/Documents/Programming/Personal/nvscript/nvscript/compiler//CMakeFiles/progress.marks
+	cd /Users/john/Documents/Programming/Personal/nvscript/nvscript && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 compiler/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/john/Documents/Programming/Personal/nvscript/nvscript/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 clean
+	cd /Users/john/Documents/Programming/Personal/nvscript/nvscript && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 compiler/clean
 .PHONY : clean
 
 # The main clean target
@@ -103,79 +103,56 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 preinstall
+	cd /Users/john/Documents/Programming/Personal/nvscript/nvscript && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 compiler/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 preinstall
+	cd /Users/john/Documents/Programming/Personal/nvscript/nvscript && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 compiler/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /Users/john/Documents/Programming/Personal/nvscript/nvscript && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
-#=============================================================================
-# Target rules for targets named nvscript
+# Convenience name for target.
+compiler/CMakeFiles/compiler.dir/rule:
+	cd /Users/john/Documents/Programming/Personal/nvscript/nvscript && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 compiler/CMakeFiles/compiler.dir/rule
+.PHONY : compiler/CMakeFiles/compiler.dir/rule
 
-# Build rule for target.
-nvscript: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 nvscript
-.PHONY : nvscript
+# Convenience name for target.
+compiler: compiler/CMakeFiles/compiler.dir/rule
+.PHONY : compiler
 
 # fast build rule for target.
-nvscript/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/nvscript.dir/build.make CMakeFiles/nvscript.dir/build
-.PHONY : nvscript/fast
+compiler/fast:
+	cd /Users/john/Documents/Programming/Personal/nvscript/nvscript && $(MAKE) $(MAKESILENT) -f compiler/CMakeFiles/compiler.dir/build.make compiler/CMakeFiles/compiler.dir/build
+.PHONY : compiler/fast
 
-src/compiler/lex/token.o: src/compiler/lex/token.cpp.o
-.PHONY : src/compiler/lex/token.o
-
-# target to build an object file
-src/compiler/lex/token.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/nvscript.dir/build.make CMakeFiles/nvscript.dir/src/compiler/lex/token.cpp.o
-.PHONY : src/compiler/lex/token.cpp.o
-
-src/compiler/lex/token.i: src/compiler/lex/token.cpp.i
-.PHONY : src/compiler/lex/token.i
-
-# target to preprocess a source file
-src/compiler/lex/token.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/nvscript.dir/build.make CMakeFiles/nvscript.dir/src/compiler/lex/token.cpp.i
-.PHONY : src/compiler/lex/token.cpp.i
-
-src/compiler/lex/token.s: src/compiler/lex/token.cpp.s
-.PHONY : src/compiler/lex/token.s
-
-# target to generate assembly for a file
-src/compiler/lex/token.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/nvscript.dir/build.make CMakeFiles/nvscript.dir/src/compiler/lex/token.cpp.s
-.PHONY : src/compiler/lex/token.cpp.s
-
-src/main.o: src/main.cpp.o
-.PHONY : src/main.o
+src/compile.o: src/compile.cpp.o
+.PHONY : src/compile.o
 
 # target to build an object file
-src/main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/nvscript.dir/build.make CMakeFiles/nvscript.dir/src/main.cpp.o
-.PHONY : src/main.cpp.o
+src/compile.cpp.o:
+	cd /Users/john/Documents/Programming/Personal/nvscript/nvscript && $(MAKE) $(MAKESILENT) -f compiler/CMakeFiles/compiler.dir/build.make compiler/CMakeFiles/compiler.dir/src/compile.cpp.o
+.PHONY : src/compile.cpp.o
 
-src/main.i: src/main.cpp.i
-.PHONY : src/main.i
+src/compile.i: src/compile.cpp.i
+.PHONY : src/compile.i
 
 # target to preprocess a source file
-src/main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/nvscript.dir/build.make CMakeFiles/nvscript.dir/src/main.cpp.i
-.PHONY : src/main.cpp.i
+src/compile.cpp.i:
+	cd /Users/john/Documents/Programming/Personal/nvscript/nvscript && $(MAKE) $(MAKESILENT) -f compiler/CMakeFiles/compiler.dir/build.make compiler/CMakeFiles/compiler.dir/src/compile.cpp.i
+.PHONY : src/compile.cpp.i
 
-src/main.s: src/main.cpp.s
-.PHONY : src/main.s
+src/compile.s: src/compile.cpp.s
+.PHONY : src/compile.s
 
 # target to generate assembly for a file
-src/main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/nvscript.dir/build.make CMakeFiles/nvscript.dir/src/main.cpp.s
-.PHONY : src/main.cpp.s
+src/compile.cpp.s:
+	cd /Users/john/Documents/Programming/Personal/nvscript/nvscript && $(MAKE) $(MAKESILENT) -f compiler/CMakeFiles/compiler.dir/build.make compiler/CMakeFiles/compiler.dir/src/compile.cpp.s
+.PHONY : src/compile.cpp.s
 
 # Help Target
 help:
@@ -185,13 +162,10 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... nvscript"
-	@echo "... src/compiler/lex/token.o"
-	@echo "... src/compiler/lex/token.i"
-	@echo "... src/compiler/lex/token.s"
-	@echo "... src/main.o"
-	@echo "... src/main.i"
-	@echo "... src/main.s"
+	@echo "... compiler"
+	@echo "... src/compile.o"
+	@echo "... src/compile.i"
+	@echo "... src/compile.s"
 .PHONY : help
 
 
@@ -203,6 +177,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /Users/john/Documents/Programming/Personal/nvscript/nvscript && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

@@ -1,8 +1,10 @@
 #ifndef TOKEN_H
 #define TOKEN_H
+
 #include <vector>
 
-enum TokenVariant: unsigned char {
+enum TokenVariant : unsigned char
+{
     /**
      * @brief A token that represents something that can not change.
      * EG: `var` in `var x = 1;`
@@ -55,74 +57,24 @@ enum TokenVariant: unsigned char {
     COMMENT_SINGLE = 10
 };
 
-class Token {
-private:
-    char* value;
-    TokenVariant variant;
-    int position;
-    TokenBuffer *buffer;
-public:
-    Token();
+class Token
+{
+    private:
+        char *value;
+        TokenVariant variant;
+        int position;
+        int *buffer;
 
-    Token(char* value, TokenVariant variant, int position = -1, TokenBuffer *buffer = nullptr);
+    public:
+        Token();
 
-    TokenVariant get_variant();
-    void set_position(int position);
+        Token(char *value, TokenVariant variant, int position = -1, int *buffer = nullptr);
 
-    bool is_null();
+        TokenVariant get_variant();
+        void set_position(int position);
 
-    int belongs_to();
-};
+        bool is_null();
 
-class TokenBuffer {
-private:
-    std::vector<Token> tokens;
-    Token previous_token;
-    int current_position;
-    /**
-     * @brief Whether or not to consume tokens when calling next_token().
-     */
-    bool consume = false;
-
-    Token increment() {
-        if ((current_position + 1) >= tokens.size()) {
-            return Token();
-        } else {
-            return tokens[current_position++];
-        }
-    }
-
-    bool available(int pos = 0) {
-        return pos < tokens.size();
-    }
-public:
-    TokenBuffer();
-    ~TokenBuffer();
-
-    /**
-     * @brief Get the next token object, but does not increment the position.
-     * @return Token
-     */
-    Token get_next();
-
-    /**
-     * @brief Get the next token object
-     * @return Token
-     */
-    Token get_current();
-
-    /**
-     * @brief Get the previous token object
-     * @return Token
-     */
-    Token get_previous();
-
-    Token get_at(int position);
-
-    void push(Token *token);
-
-    int size();
-
-    int get_position();
+        int belongs_to();
 };
 #endif // TOKEN_H
