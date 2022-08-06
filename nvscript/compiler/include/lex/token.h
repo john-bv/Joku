@@ -3,7 +3,7 @@
 
 #include <vector>
 
-enum TokenVariant : unsigned char
+enum class TokenVariant: unsigned char
 {
     /**
      * @brief A token that represents something that can not change.
@@ -48,13 +48,17 @@ enum TokenVariant : unsigned char
      */
     END_OF_FILE = 8,
     /**
+     * @brief Represents whitespace.
+     */
+    WHITESPACE = 9,
+    /**
      * @brief Represents a comment. Specifically Inline or multiline.
      */
-    COMMENT = 9,
+    COMMENT = 10,
     /**
      * @brief Represents a comment, one that is one line.
      */
-    COMMENT_SINGLE = 10
+    COMMENT_SINGLE = 11
 };
 
 class Token

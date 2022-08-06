@@ -1,4 +1,4 @@
-#include "lex/tokenstream.h"
+#include "lex/TokenStream.h"
 
 TokenStream::TokenStream()
 {
