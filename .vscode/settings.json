@@ -57,7 +57,8 @@
         "string_view": "cpp",
         "system_error": "cpp",
         "tuple": "cpp",
-        "deque": "cpp"
+        "deque": "cpp",
+        "*.tpp": "cpp"
     },
-    "cmake.sourceDirectory": "${workspaceFolder}/nvscript"
+    "cmake.sourceDirectory": "${workspaceFolder}/."
 }

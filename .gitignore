@@ -69,3 +69,7 @@ dkms.conf
 build
 Makefile
 *.a
+
+# Project files
+nv_cli
+nv_cli.exe

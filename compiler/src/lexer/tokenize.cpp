@@ -1,5 +1,4 @@
-#include "lex/tokenize.h"
-#include "compiler/util/Stream.h"
+#include "compiler/lex/tokenize.h"
 #include <iostream>
 
 TokenStream *tokenize_str(char *str)
@@ -11,7 +10,7 @@ TokenStream *tokenize_str(char *str)
     while (!source_buff->is_eof())
     {
         // boiler code for now
-        char c = source_buff->peek();
+        char* c = source_buff->peek();
         std::cout << c << std::endl;
     }
 

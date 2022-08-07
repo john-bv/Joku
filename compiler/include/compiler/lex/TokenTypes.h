@@ -1,7 +1,7 @@
 #ifndef __TOKEN_TYPES_H__
 #define __TOKEN_TYPES_H__
 
-#include "compiler/util/Stream.h"
+#include "compiler/util/Stream.hpp"
 
 namespace token_util
 {

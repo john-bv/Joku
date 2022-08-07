@@ -1,7 +1,7 @@
 #ifndef __TOKEN_STREAM_H__
 #define __TOKEN_STREAM_H__
 
-#include "lex/Token.h"
+#include "compiler/lex/Token.h"
 #include <deque>
 
 class TokenStream
