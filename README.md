@@ -1,6 +1,5 @@
-# nvscript
+# Joku
 A hackable native/compiled scripting language designed for simplicity and mathematically algorithms
-> Name is not absolute yet, and is a placeholder for a future name.
 
 <!-- How it works:
 
