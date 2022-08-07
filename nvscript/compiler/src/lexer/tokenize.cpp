@@ -1,7 +1,4 @@
 #include "lex/tokenize.h"
-#include "lex/TokenStream.h"
-#include "lex/TokenTypes.h"
-#include "compiler/util/Stream.h"
 #include <iostream>
 
 TokenStream *tokenize_str(char *str)
