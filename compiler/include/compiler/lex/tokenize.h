@@ -6,6 +6,6 @@
 #include "compiler/util/Stream.hpp"
 #include <deque>
 
-TokenStream *tokenize_str(char *source);
+TokenStream *tokenize_str(char *source, int len);
 
 #endif

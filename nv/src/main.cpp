@@ -6,27 +6,27 @@
 int main()
 {
     std::cout << "Ok, this is entry !?" << std::endl;
-    const char *test = "test dog test todsa \0"; // null terminator for length
+    const char *test = "test dog test todsa"; // null terminator for length
     // tokenize_str((char *)test);
     // this is a test to test stream.
     // Stream<Token> *stream = new Stream<Token>();
-    Stream<char> *source_buff = Stream<char>::from_ptr((char *)test);
+    Stream<char> *source_buff = Stream<char>::from_ptr((char *)test, 20);
     Stream<char> *what = source_buff->sub_items(1, 4); // shuold be "est"
 
-    for (char item: source_buff->items())
+    for (char item: what->items())
     {
-        std::cout << item << std::endl;
+        std::cout << "source_buff->sub_items(1, 4) = " << item << std::endl;
     }
 
 
-    char* c = what->peek();
+    auto c = what->peek();
 
-    if (c == nullptr)
+    if (!c.has_value())
     {
         std::cout << "nullptr" << std::endl;
     }
     else
     {
-        std::cout << "source_buff->peek() = " << *c << std::endl;
+        std::cout << "source_buff->peek() = " << c.value() << std::endl;
     }
 }

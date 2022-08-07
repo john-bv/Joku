@@ -58,7 +58,8 @@
         "system_error": "cpp",
         "tuple": "cpp",
         "deque": "cpp",
-        "*.tpp": "cpp"
+        "*.tpp": "cpp",
+        "functional": "cpp"
     },
     "cmake.sourceDirectory": "${workspaceFolder}/."
 }

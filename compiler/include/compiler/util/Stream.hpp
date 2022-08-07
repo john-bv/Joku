@@ -2,6 +2,8 @@
 #define __STREAM_H__
 
 #include <deque>
+#include <functional>
+#include <optional>
 
 template <class Item>
 class Stream
@@ -67,7 +69,7 @@ class Stream
         /**
          * @brief Consumes the Item in the stream, giving you the next Item.
          */
-        Item* peek();
+        std::optional<Item> peek();
 
         Stream<Item>* peek(int amt);
 

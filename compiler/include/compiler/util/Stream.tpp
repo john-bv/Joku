@@ -2,7 +2,7 @@
 #define __STREAM_TPP__
 
 #include <stdexcept>
-#include <iostream>
+#include <optional>
 
 template<typename Item>
 Stream<Item>* Stream<Item>::from_ptr(Item *items, long len)
@@ -19,7 +19,6 @@ Stream<Item>* Stream<Item>::from_ptr(Item *items, long len)
     //     len = (sizeof(items) / sizeof(items[0]));
     // }
 
-    std::cout << "len: " << len << std::endl;
     Stream<Item> *stream = new Stream();
     stream->buff = std::deque<Item>(items, items + len);
     return stream;
@@ -46,7 +45,6 @@ template<typename Item> Stream<Item>::Stream()
 
 template<typename Item> Stream<Item>::~Stream()
 {
-    delete[] this->buff;
 }
 
 template<typename Item>
@@ -72,17 +70,16 @@ Item Stream<Item>::peek_internal()
 }
 
 template<typename Item>
-Item* Stream<Item>::peek()
+std::optional<Item> Stream<Item>::peek()
 {
     try
     {
         Item item = this->peek_internal();
-        Item *ptr = &item;
-        return ptr;
+        return item;
     }
     catch (std::exception &e)
     {
-        return nullptr;
+        return std::nullopt;
     }
 }
 
@@ -98,12 +95,12 @@ Stream<Item>* Stream<Item>::peek(int amt)
         Stream<Item> *stream = new Stream();
         for (int i = 0; i < amt; i++)
         {
-            Item *item = this->peek();
-            if (item == nullptr)
+            std::optional<Item> item = this->peek();
+            if (!item.has_value())
             {
                 break;
             }
-            stream->buff.push_back(*item);
+            stream->buff.push_back(item.value());
         }
 
         if (stream->size() == 0)
