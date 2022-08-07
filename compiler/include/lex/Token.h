@@ -1,9 +1,9 @@
-#ifndef TOKEN_H
-#define TOKEN_H
+#ifndef __TOKEN_H__
+#define __TOKEN_H__
 
 #include <vector>
 
-enum class TokenVariant: unsigned char
+enum TokenVariant: unsigned char
 {
     /**
      * @brief A token that represents something that can not change.

@@ -1,5 +1,5 @@
-#ifndef _TOKEN_TYPES_H_
-#define _TOKEN_TYPES_H_
+#ifndef __TOKEN_TYPES_H__
+#define __TOKEN_TYPES_H__
 
 #include "compiler/util/Stream.h"
 

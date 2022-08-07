@@ -1,7 +1,33 @@
 #include "compiler/util/Stream.h"
 
 template <class Item>
-Stream<Item>::Stream()
+Stream<Item> *Stream<Item>::from_arr(Item items[])
+{
+    // I would normally do a for loop here, but i believe that
+    // this initialization is faster than a for loop
+    Stream<Item> *stream = new Stream();
+    stream->buff = std::deque<Item>(items, items + sizeof(items) / sizeof(items[0]));
+    return stream;
+}
+
+template <class Item>
+Stream<Item> *Stream<Item>::from_ptr(Item *items)
+{
+    Stream<Item> *stream = new Stream();
+    stream->buff = std::deque<Item>(items, items + sizeof(items) / sizeof(items[0]));
+    return stream;
+}
+
+template <class Item>
+Stream<Item> *Stream<Item>::from_deque(std::deque<Item> items)
+{
+    // this is a little hacky cause we already have the buffer, we can just move the buffer
+    Stream<Item> *stream = new Stream();
+    stream->buff = items;
+    return stream;
+}
+
+template<class Item> Stream<Item>::Stream()
 {
     this->position = 0;
     this->ilen = 0;
@@ -91,6 +117,12 @@ int Stream<Item>::consumed()
 }
 
 template <class Item>
+int Stream<Item>::size()
+{
+    return this->buff.size();
+}
+
+template <class Item>
 Item *Stream<Item>::nth()
 {
     if (this->buff.size() < 1)
@@ -143,31 +175,4 @@ std::vector<Item> Stream<Item>::items()
         items.push_back(this->buff.at(i));
     }
     return items;
-}
-
-template <class Item>
-Stream<Item> *Stream<Item>::from_arr(Item items[])
-{
-    // I would normally do a for loop here, but i believe that
-    // this initialization is faster than a for loop
-    Stream<Item> *stream = new Stream();
-    stream->buff = std::deque<Item>(items, items + sizeof(items) / sizeof(items[0]));
-    return stream;
-}
-
-template <class Item>
-Stream<Item> *Stream<Item>::from_ptr(Item *items)
-{
-    Stream<Item> *stream = new Stream();
-    stream->buff = std::deque<Item>(items, items + sizeof(items) / sizeof(items[0]));
-    return stream;
-}
-
-template <class Item>
-Stream<Item> *Stream<Item>::from_deque(std::deque<Item> items)
-{
-    // this is a little hacky cause we already have the buffer, we can just move the buffer
-    Stream<Item> *stream = new Stream();
-    stream->buff = items;
-    return stream;
 }

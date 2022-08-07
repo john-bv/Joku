@@ -79,6 +79,11 @@ int TokenStream::consumed()
     return this->ilen - this->token_buffer.size();
 }
 
+int TokenStream::size()
+{
+    return this->token_buffer.size();
+}
+
 Token *TokenStream::nth()
 {
     if (this->token_buffer.size() < 1)

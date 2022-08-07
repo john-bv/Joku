@@ -3,7 +3,6 @@
 
 #include "lex/TokenStream.h"
 #include "lex/TokenTypes.h"
-#include "compiler/util/Stream.h"
 #include <deque>
 
 TokenStream *tokenize_str(char *source);

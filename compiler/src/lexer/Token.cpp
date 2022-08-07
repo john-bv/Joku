@@ -1,5 +1,5 @@
 #include <vector>
-#include "lex/token.h"
+#include "lex/Token.h"
 #include "lex/TokenStream.h"
 
 Token::Token()

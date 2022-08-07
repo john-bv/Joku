@@ -1,7 +1,7 @@
 project(compiler)
 
 file(GLOB compiler_sources
-    "src/*.cpp"
+    "src/**/*.cpp"
 )
 
 add_library(${PROJECT_NAME} ${compiler_sources})

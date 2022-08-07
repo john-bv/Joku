@@ -58,5 +58,6 @@
         "system_error": "cpp",
         "tuple": "cpp",
         "deque": "cpp"
-    }
+    },
+    "cmake.sourceDirectory": "${workspaceFolder}/nvscript"
 }

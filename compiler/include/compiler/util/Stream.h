@@ -1,5 +1,5 @@
-#ifndef _STREAM_H_
-#define _STREAM_H_
+#ifndef __STREAM_H__
+#define __STREAM_H__
 
 #include <deque>
 
@@ -39,29 +39,29 @@ class Stream
         /**
          * @brief Construct a new Stream object from an array of items.
          */
-        static Stream* from_arr(Item items[]);
+        static Stream<Item>* from_arr(Item items[]);
 
         /**
          * @brief Construct a new Stream object from an array of items.
          */
-        static Stream* from_ptr(Item *items);
+        static Stream<Item>* from_ptr(Item *items);
 
         /**
          * @brief Constructs a new Stream object from a deque of items.
          */
-        static Stream* from_deque(std::deque<Item> items);
+        static Stream<Item>* from_deque(std::deque<Item> items);
 
         /**
          * @brief Construct a new Stream object.
          */
-        Stream();
+        Stream<Item>();
 
         /**
          * @brief Consumes the Item in the stream, giving you the next Item.
          */
         Item peek();
 
-        Stream* peek(int amt);
+        Stream<Item>* peek(int amt);
 
         bool push(Item item);
 
