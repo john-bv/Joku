@@ -4,6 +4,8 @@
 #include <stdexcept>
 #include <optional>
 
+using namespace joku::compiler;
+
 template<typename Item>
 Stream<Item>* Stream<Item>::from_ptr(Item *items, long len)
 {

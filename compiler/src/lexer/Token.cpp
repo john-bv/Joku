@@ -2,6 +2,8 @@
 #include "compiler/lex/Token.h"
 #include "compiler/lex/TokenStream.h"
 
+using namespace joku::compiler;
+
 Token::Token()
 {
     this->value = nullptr;

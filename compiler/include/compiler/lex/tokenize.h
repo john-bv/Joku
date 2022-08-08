@@ -6,6 +6,8 @@
 #include "compiler/util/Stream.hpp"
 #include <deque>
 
+using namespace joku::compiler;
+
 TokenStream *tokenize_str(char *source, int len);
 
 #endif

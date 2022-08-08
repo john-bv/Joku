@@ -1,6 +1,6 @@
-project(nv_cli)
+project(joku_cli)
 
-file(GLOB nv_sourcefiles
+file(GLOB joku_cli_sources
     "src/*.cpp"
 )
 

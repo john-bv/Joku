@@ -3,6 +3,8 @@
 #include "compiler/lex/Token.h"
 // #include "compiler/lex/tokenize.h"
 
+using namespace joku::compiler;
+
 int main()
 {
     std::cout << "Ok, this is entry !?" << std::endl;

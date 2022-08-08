@@ -1,5 +1,7 @@
 #include "compiler/lex/TokenStream.h"
 
+using namespace joku::compiler;
+
 TokenStream::TokenStream()
 {
     this->position = 0;

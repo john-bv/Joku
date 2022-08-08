@@ -5,129 +5,136 @@
 #include <functional>
 #include <optional>
 
-template <class Item>
-class Stream
+namespace joku
 {
-    private:
-        /**
-         * @brief The initial length of the stream.
-         */
-        int ilen;
 
-        /**
-         * @brief Stores the position of the last item that was read.
-         * @internal
-         */
-        int position;
+    namespace compiler
+    {
+        template <class Item>
+        class Stream
+        {
+            private:
+                /**
+                 * @brief The initial length of the stream.
+                 */
+                int ilen;
 
-        /**
-         * @brief The ID of this stream. (this can be -1 if it is not relevant)
-         */
-        signed char unique_id;
+                /**
+                 * @brief Stores the position of the last item that was read.
+                 * @internal
+                 */
+                int position;
 
-        /**
-         * @brief Whether or not to allow the Item buffer to be resized. (externally)
-         */
-        bool allow_resize;
+                /**
+                 * @brief The ID of this stream. (this can be -1 if it is not relevant)
+                 */
+                signed char unique_id;
 
-        /**
-         * @brief The last Item that was read.
-         */
-        Item *last_item;
+                /**
+                 * @brief Whether or not to allow the Item buffer to be resized. (externally)
+                 */
+                bool allow_resize;
 
-        /**
-         * @brief Consumes the Item in the stream, giving you the next Item.
-         */
-        Item peek_internal();
+                /**
+                 * @brief The last Item that was read.
+                 */
+                Item *last_item;
 
-    public:
-        /**
-         * @brief A dynamically allocated array of Items.
-         * This will change as the stream is parsed.
-         *
-         * It is advised that you use `items()` instead of accessing this directly.
-         */
-        std::deque<Item> buff;
+                /**
+                 * @brief Consumes the Item in the stream, giving you the next Item.
+                 */
+                Item peek_internal();
 
-        /**
-         * @brief Construct a new Stream object from an array of items.
-         */
-        static Stream<Item>* from_ptr(Item *items, long len);
+            public:
+                /**
+                 * @brief A dynamically allocated array of Items.
+                 * This will change as the stream is parsed.
+                 *
+                 * It is advised that you use `items()` instead of accessing this directly.
+                 */
+                std::deque<Item> buff;
 
-        /**
-         * @brief Constructs a new Stream object from a deque of items.
-         */
-        static Stream<Item>* from_deque(std::deque<Item> items);
+                /**
+                 * @brief Construct a new Stream object from an array of items.
+                 */
+                static Stream<Item>* from_ptr(Item *items, long len);
 
-        /**
-         * @brief Construct a new Stream object.
-         */
-        Stream<Item>();
+                /**
+                 * @brief Constructs a new Stream object from a deque of items.
+                 */
+                static Stream<Item>* from_deque(std::deque<Item> items);
 
-        ~Stream<Item>();
+                /**
+                 * @brief Construct a new Stream object.
+                 */
+                Stream<Item>();
 
-        /**
-         * @brief Consumes the Item in the stream, giving you the next Item.
-         */
-        std::optional<Item> peek();
+                ~Stream<Item>();
 
-        Stream<Item>* peek(int amt);
+                /**
+                 * @brief Consumes the Item in the stream, giving you the next Item.
+                 */
+                std::optional<Item> peek();
 
-        bool push(Item item);
+                Stream<Item>* peek(int amt);
 
-        bool is_eof();
+                bool push(Item item);
 
-        /**
-         * @brief Returns the amount of Items that have been consumed.
-         * @return int
-         */
-        int consumed();
+                bool is_eof();
 
-        int size();
+                /**
+                 * @brief Returns the amount of Items that have been consumed.
+                 * @return int
+                 */
+                int consumed();
 
-        /**
-         * @brief Return a Item at given position ahead. (nullptr if out of bounds)
-         */
-        Item *nth();
+                int size();
 
-        /**
-         * @brief Return the next Item in the stream.
-         */
-        Item* nth(int n);
+                /**
+                 * @brief Return a Item at given position ahead. (nullptr if out of bounds)
+                 */
+                Item *nth();
 
-        /**
-         * @brief Returns the first item in the stream without consuming it.
-         */
-        Item *first() {
-            return nth(0);
-        }
+                /**
+                 * @brief Return the next Item in the stream.
+                 */
+                Item* nth(int n);
 
-        /**
-         * @brief Returns the second item in the stream without consuming it.
-         */
-        Item *second() {
-            return nth(1);
-        }
+                /**
+                 * @brief Returns the first item in the stream without consuming it.
+                 */
+                Item *first() {
+                    return nth(0);
+                }
 
-        /**
-         * @brief Returns the third item in the stream without consuming it.
-         */
-        Item *third() {
-            return nth(2);
-        }
+                /**
+                 * @brief Returns the second item in the stream without consuming it.
+                 */
+                Item *second() {
+                    return nth(1);
+                }
 
-        /**
-         * @brief Similar to sub_str, but returns a stream of `Item`s.
-         */
-        Stream<Item> *sub_items(int from, int to);
+                /**
+                 * @brief Returns the third item in the stream without consuming it.
+                 */
+                Item *third() {
+                    return nth(2);
+                }
 
-        /**
-         * @brief Returns the Item that are left in the stream.
-         * This is COPIED, so you can't modify the actual buffer.
-         */
-        std::vector<Item> items();
-};
+                /**
+                 * @brief Similar to sub_str, but returns a stream of `Item`s.
+                 */
+                Stream<Item> *sub_items(int from, int to);
 
-#include "compiler/util/Stream.tpp"
+                /**
+                 * @brief Returns the Item that are left in the stream.
+                 * This is COPIED, so you can't modify the actual buffer.
+                 */
+                std::vector<Item> items();
+        };
+
+        #include "compiler/util/Stream.tpp"
+    };
+}
 
 #endif

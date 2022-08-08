@@ -3,10 +3,13 @@
 
 #include "compiler/util/Stream.hpp"
 
-namespace token_util
+namespace joku
 {
-    char *get_comment(Stream<char> *stream);
-    bool is_whitespace(char c);
+    namespace token_util
+    {
+        char *get_comment(Stream<char> *stream);
+        bool is_whitespace(char c);
+    };
 }
 
 #endif

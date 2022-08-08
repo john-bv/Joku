@@ -8,15 +8,19 @@
 
 This is the official reference for the Joku programming language.
 
-Joku is a multipurpose language designed for both systems and embeded programming.
+Joku is a multipurpose language designed for both systems and embeded programming. Joku is a type elegant and memory safe programming language.
+
+The syntax of Joku is designed to be purposeful and efficient to write in; similar to that of [Rust](https://www.rust-lang.org), [C++](https://docs.microsoft.com/en-us/cpp/cpp/cpp-language-reference?view=msvc-170) and [Typescript](https://typescriptlang.org).
+
+To view the chapters of the specification [click here](#index)
 
 <h1 id="syntax">2. Syntax</h1>
 
-The Joku lexer is composed of the folowing parts:
+The Joku lexer is composed of the following parts:
 
 1. [Keywords](#syntax-keywords)
 
-2. [Identifiers]
+2. [Identifiers](#syntax-identifiers)
 
 3. [Literals]
 
@@ -32,104 +36,88 @@ The Joku lexer is composed of the folowing parts:
 
 9. [Token]
 
+Each of these components is relevant to a file serving as Source Code. This code should be encoded in `UTF-8`.
+
 <h3 id="syntax-keywords">2.1 Keywords</h3>
 
-A keyword is a word that is reserved by the compiler that serves a specific function or purpose.
+A keyword is a word that is reserved by the compiler that serves a specific function or purpose. For implementations regarding these keywords refer to ~~[this chapter](todo)~~.
 
 Joku reserves the following keywords:
 
-- `abstract`
+```diff
+Abstract            Asm                 Await
+Async               As                  Become
+Break               Case                Catch
+Class               Continue            Data
+Delete              Do                  Else
+Enum                Export              Extends
+Extern              False               Final
+For                 From                Fn
+If                  Import              In
+Is                  Let                 Loop
+Match               Mod                 Of
+Priv                Pub                 Prot
+Return              Self                Static
+Super               True                Trait
+Try                 Type                Throw
+Type                Typeof              Var
+Where               While               Yeild
+```
 
-- `asm`
+<h3 id="syntax-identifiers">
+2.2 Identifiers
+</h3>
 
-- `await`
+An Identifier is a name for an entity such as a typename. Identifiers are composed of a sequence of one or more letters and digits.
 
-- `async` or `asyn`
+Some Examples of identifers could be:
 
-- `as`
+- `foo`
 
-- `become`
+- `Bar`
 
-- `break`
+- `_foobar`
 
-- `catch`
+- `$`
 
-- `class`
+#### Identifier Rules
 
-- `continue`
+1. An identifier **must** start with a letter or non-digit char that is not a language component.
 
-- `data`
+2. An identifier may not be the name of a reserved word, such as a keyword.
 
-- `delete`
+3. May not contain a zero-width character.
 
-- `do`
+4. Must be present infront of an expression or declaration. 
 
-- `else`
+---
 
-- `enum`
+<h1 id="source-files">3. Modules and Source Files</h1>
 
-- `export`
+---
 
-- `extern`
 
-- `false`
 
-- `final`
+## Index
 
-- `for`
+1. [Introduction](#introduction)
 
-- `fn`
-
-- `if`
-
-- `in`
-
-- `import`
-
-- `let`
-
-- `loop`
-
-- `match`
-
-- `mod`
-
-- `of`
-
-- `pub`
-
-- `priv`
-
-- `prot`
-
-- `return`
-
-- `self`
-
-- `static`
-
-- `struct`
-
-- `super`
-
-- `true`
-
-- `trait`
-
-- `this`
-
-- `throw`
-
-- `type`
-
-- `typeof`
-
-- `try`
-
-- `var`
-
-- `where`
-
-- `while`
-
-- `yield`
+2. [Syntax](#syntax)
+   
+   1. [Keywords](#syntax-keywords)
+   
+   2. [Identifiers](#syntax-identifiers)
+   
+   3. [Literals]
+   
+   4. [Operators]
+   
+   5. [Punctuator]
+   
+   6. [End of File]
+   
+   7. [Comment Singleton]
+   
+   8. [Comment]
+   
+   9. [Token]
