@@ -48,7 +48,7 @@ namespace joku::compiler::lexer
             if (stream->first() != nullptr && *stream->first() == '/')
             {
                 stream->peek();
-                std::vector<char> values = stream->consume_while([&](char c){ return c == '\n'; });
+                std::vector<char> values = stream->consume_while([&](char c){ return c != '\n'; });
                 POS_END(stream);
                 std::string segment(values.begin(), values.end());
                 return INIT_TOKEN(segment, TokenType::COMMENT_SINGLE);
@@ -56,7 +56,7 @@ namespace joku::compiler::lexer
             else if (stream->first() != nullptr && *stream->first() == '*')
             {
                 stream->peek();
-                std::vector<char> values = stream->consume_while([&](char c){ return c == '*'; });
+                std::vector<char> values = stream->consume_while([&](char c){ return c != '*'; });
                 POS_END(stream);
                 std::string segment(values.begin(), values.end());
                 return INIT_TOKEN(segment, TokenType::COMMENT);
@@ -70,11 +70,10 @@ namespace joku::compiler::lexer
         {
             POS_START(stream);
             stream->peek();
-            std::vector<char> values = stream->consume_while([](char c)
-                                                            { return c == '\n'; });
+            std::vector<char> values = stream->consume_while([](char c){ return c != '\n'; });
             POS_END(stream);
             std::string segment(values.begin(), values.end());
-            return INIT_TOKEN(segment, TokenType::COMMENT);
+            return INIT_TOKEN(segment, TokenType::COMMENT_SINGLE);
         }
         else
         {

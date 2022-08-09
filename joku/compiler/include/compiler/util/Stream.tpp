@@ -123,7 +123,7 @@ bool Stream<Item>::push(Item item)
 template<typename Item>
 bool Stream<Item>::is_eof()
 {
-    return this->buff.size() == 0 && this->position == this->ilen;
+    return this->buff.size() == 0;
 }
 
 template<typename Item>
@@ -136,12 +136,10 @@ template<typename Item>
 std::vector<Item> Stream<Item>::consume_while(std::function<bool(Item)> predicate)
 {
     std::vector<Item> consumed;
-    Item *next = this->first();
 
-    while (predicate(*next) == true)
+    while (predicate(*this->first()) == true)
     {
-        next = this->first();
-        if (next == nullptr)
+        if (this->first() == nullptr)
         {
             break;
         }

@@ -111,8 +111,8 @@ namespace joku::compiler
             int consumed();
 
             /**
-             * @brief Consumes the buffer until the predicate is met or the stream is empty.
-             * @return int
+             * @brief Consumes each Item in the stream until the predicate returns false.
+             * @return std::vector<Item>
              */
             std::vector<Item> consume_while(std::function<bool(Item)> predicate);
 

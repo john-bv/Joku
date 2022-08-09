@@ -16,7 +16,7 @@ Stream<Token> *joku::compiler::tokenizer::tokenize_str(char *str, int len)
     // TokenStream *stream = new TokenStream();
     Stream<Token> *stream = new Stream<Token>();
 
-    int last_pos = 0;
+    int last_pos = -1;
 
     while (!source_buff->is_eof())
     {
@@ -31,7 +31,6 @@ Stream<Token> *joku::compiler::tokenizer::tokenize_str(char *str, int len)
         last_pos = source_buff->get_position();
 
         // debug source_buff->get_position();
-        printf("Line: %d = %c\n", source_buff->get_position(), *source_buff->first());
 
         if (
             (token = consume_whitespace(source_buff)).has_value() ||
@@ -49,5 +48,6 @@ Stream<Token> *joku::compiler::tokenizer::tokenize_str(char *str, int len)
             Token tk = Token(std::string{v}, TokenType::UNKNOWN, source_buff->get_position()-1, source_buff->get_position());
         }
     }
+    printf("Woah, done!\n");
     return stream;
 }
