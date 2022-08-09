@@ -71,5 +71,5 @@ Makefile
 *.a
 
 # Project files
-nv_cli
-nv_cli.exe
+joku_cli
+joku_cli.exe
