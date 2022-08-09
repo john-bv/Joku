@@ -1,6 +1,7 @@
 #ifndef __STREAM_H__
 #define __STREAM_H__
 
+#include <vector>
 #include <deque>
 #include <functional>
 #include <optional>
@@ -33,6 +34,12 @@ namespace joku::compiler
             bool allow_resize;
 
             /**
+             * @brief Whether or not the stream should remove the last item that was read.
+             * THIS WILL EFFECT PEEK
+             */
+            bool allow_remove;
+
+            /**
              * @brief The last Item that was read.
              */
             Item *last_item;
@@ -57,9 +64,9 @@ namespace joku::compiler
             static Stream<Item>* from_ptr(Item *items, long len);
 
             /**
-             * @brief Constructs a new Stream object from a deque of items.
+             * @brief Constructs a new Stream object from a vector of items.
              */
-            static Stream<Item>* from_deque(std::deque<Item> items);
+            static Stream<Item>* from_vector(std::vector<Item> items);
 
             /**
              * @brief Construct a new Stream object.
@@ -79,13 +86,47 @@ namespace joku::compiler
 
             bool is_eof();
 
+            bool toggle_lock()
+            {
+                this->allow_resize = !this->allow_resize;
+                return this->allow_resize;
+            }
+
+            bool lock()
+            {
+                this->allow_resize = false;
+                return this->allow_resize;
+            }
+
+            bool unlock()
+            {
+                this->allow_resize = true;
+                return true;
+            }
+
             /**
              * @brief Returns the amount of Items that have been consumed.
              * @return int
              */
             int consumed();
 
+            /**
+             * @brief Consumes the buffer until the predicate is met or the stream is empty.
+             * @return int
+             */
+            std::vector<Item> consume_while(std::function<bool(Item)> predicate);
+
             int size();
+
+            /**
+             * @brief Returns the current position in the source being read.
+             * This will NOT allow you to recover consumed items.
+             * @return Item
+             */
+            int get_position()
+            {
+                return this->position;
+            }
 
             /**
              * @brief Return a Item at given position ahead. (nullptr if out of bounds)

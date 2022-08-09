@@ -1,13 +1,14 @@
 #ifndef __TOKENIZE_H__
 #define __TOKENIZE_H__
 
-#include "compiler/lex/TokenStream.h"
-// #include "compiler/lex/TokenTypes.h"
+#include "compiler/lex/Token.h"
 #include "compiler/util/Stream.hpp"
-#include <deque>
 
 using namespace joku::compiler;
 
-TokenStream *tokenize_str(char *source, int len);
+namespace joku::compiler::tokenizer
+{
+    Stream<Token> *tokenize_str(char *source, int len);
+}
 
 #endif

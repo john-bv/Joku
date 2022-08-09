@@ -2,36 +2,26 @@
 #define __STREAM_TPP__
 
 #include <stdexcept>
+#include <functional>
 #include <optional>
 
 using namespace joku::compiler;
 
 template<typename Item>
-Stream<Item>* Stream<Item>::from_ptr(Item *items, long len)
+Stream<Item> *Stream<Item>::from_ptr(Item *items, long len)
 {
-    // I would normally do a for loop here, but i believe that
-    // this initialization is faster than a for loop
-
-    // THIS IS A VERY BAD IDEA
-    // if (len == 0)
-    // {
-    //     // this is a hack to try and determine the length of the array
-    //     // because this array has no length specified, therefore we are
-    //     // this is super hacky, and you should pass the length of the array
-    //     len = (sizeof(items) / sizeof(items[0]));
-    // }
-
     Stream<Item> *stream = new Stream();
-    stream->buff = std::deque<Item>(items, items + len);
+    std::vector<Item> itemss = std::vector<Item>(items, items + len);
+    stream->buff.assign(itemss.begin(), itemss.end());
     return stream;
 }
 
 template<typename Item>
-Stream<Item>* Stream<Item>::from_deque(std::deque<Item> items)
+Stream<Item> *Stream<Item>::from_vector(std::vector<Item> items)
 {
     // this is a little hacky cause we already have the buffer, we can just move the buffer
-    Stream<Item> *stream = new Stream();
-    stream->buff = items;
+    Stream<Item> *stream = Stream();
+    stream->buff = std::deque{items};
 
     return stream;
 }
@@ -42,7 +32,6 @@ template<typename Item> Stream<Item>::Stream()
     this->ilen = 0;
     this->unique_id = -1;
     this->last_item = nullptr;
-    this->buff = std::deque<Item>();
 }
 
 template<typename Item> Stream<Item>::~Stream()
@@ -144,6 +133,25 @@ int Stream<Item>::consumed()
 }
 
 template<typename Item>
+std::vector<Item> Stream<Item>::consume_while(std::function<bool(Item)> predicate)
+{
+    std::vector<Item> consumed;
+    Item *next = this->first();
+
+    while (predicate(*next) == true)
+    {
+        next = this->first();
+        if (next == nullptr)
+        {
+            break;
+        }
+        Item item = this->peek().value();
+        consumed.push_back(item);
+    }
+    return consumed;
+}
+
+template<typename Item>
 int Stream<Item>::size()
 {
     return this->buff.size();
@@ -165,13 +173,13 @@ Item *Stream<Item>::nth()
 template<typename Item>
 Item* Stream<Item>::nth(int n)
 {
-    if (this->buff.size() < n)
+    if (this->buff.size() == 0)
     {
         return nullptr;
     }
     else
     {
-        return &this->buff.at(n);
+        return &this->buff.at((unsigned int) n);
     }
 }
 

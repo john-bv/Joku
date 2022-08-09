@@ -59,7 +59,10 @@
         "tuple": "cpp",
         "deque": "cpp",
         "*.tpp": "cpp",
-        "functional": "cpp"
+        "functional": "cpp",
+        "fstream": "cpp",
+        "iomanip": "cpp",
+        "stack": "cpp"
     },
     "cmake.sourceDirectory": "${workspaceFolder}/."
 }

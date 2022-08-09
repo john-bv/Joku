@@ -1,34 +1,34 @@
+#include <string>
+#include <fstream>
 #include <iostream>
+#include <iterator>
 #include "compiler/util/Stream.hpp"
 #include "compiler/lex/Token.h"
-// #include "compiler/lex/tokenize.h"
+#include "compiler/lex/Tokenize.h"
 
 using namespace joku::compiler;
 
-int main()
+int main(int argc, char* argv[])
 {
-    std::cout << "Ok, this is entry !?" << std::endl;
-    const char *test = "test dog test todsa"; // null terminator for length
-    // tokenize_str((char *)test);
-    // this is a test to test stream.
-    // Stream<Token> *stream = new Stream<Token>();
-    Stream<char> *source_buff = Stream<char>::from_ptr((char *)test, 20);
-    Stream<char> *what = source_buff->sub_items(1, 4); // shuold be "est"
-
-    for (char item: what->items())
+    // Check if there is a file to read from
+    if (argc < 2)
     {
-        std::cout << "source_buff->sub_items(1, 4) = " << item << std::endl;
+        std::cout << "No file to read from" << std::endl;
+        return 1;
     }
 
+    std::ifstream file(argv[1]);
 
-    auto c = what->peek();
+    std::string contents(std::istreambuf_iterator<char>{file}, {});
 
-    if (!c.has_value())
+    Stream<Token> *stream = joku::compiler::tokenizer::tokenize_str((char *)contents.c_str(), contents.length());
+
+    // Print tokens
+    while (!stream->is_eof())
     {
-        std::cout << "nullptr" << std::endl;
+        Token token = stream->peek().value();
+        printf("[Token:%s] %s\n", token.get_variant(), token.get_value().c_str());
     }
-    else
-    {
-        std::cout << "source_buff->peek() = " << c.value() << std::endl;
-    }
+
+    return 0;
 }
