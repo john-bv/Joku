@@ -23,6 +23,8 @@ let matrix_r = [
     [3, 5, 1]
 ]
 
+let char = 't';
+
 test "addition":
     result = matrix_1 + matrix_2
 

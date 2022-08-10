@@ -31,7 +31,8 @@ template<typename Item> Stream<Item>::Stream()
     this->position = 0;
     this->ilen = 0;
     this->unique_id = -1;
-    this->last_item = nullptr;
+    this->last_item = std::nullopt;
+    this->allow_resize = true;
 }
 
 template<typename Item> Stream<Item>::~Stream()
@@ -53,6 +54,7 @@ Item Stream<Item>::peek_internal()
     }
     else
     {
+        this->last_item = this->buff.front();
         this->position++;
         Item front = this->buff.front();
         this->buff.pop_front();
@@ -137,7 +139,7 @@ std::vector<Item> Stream<Item>::consume_while(std::function<bool(Item)> predicat
 {
     std::vector<Item> consumed;
 
-    while (predicate(*this->first()) == true)
+    while (this->first() != nullptr && (predicate(*(this->first())) == true) && !this->is_eof())
     {
         if (this->first() == nullptr)
         {
@@ -146,6 +148,7 @@ std::vector<Item> Stream<Item>::consume_while(std::function<bool(Item)> predicat
         Item item = this->peek().value();
         consumed.push_back(item);
     }
+
     return consumed;
 }
 

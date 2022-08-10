@@ -42,8 +42,12 @@ std::string Token::get_name()
             return "UNKNOWN";
         case TokenType::IDENTIFIER:
             return "IDENTIFIER";
-        case TokenType::LITERAL:
-            return "LITERAL";
+        case TokenType::LITERAL_CHAR:
+            return "LITERAL_CHAR";
+        case TokenType::LITERAL_STRING:
+            return "LITERAL_STRING";
+        case TokenType::LITERAL_NUMBER:
+            return "LITERAL_NUMBER";
         case TokenType::OPERATOR:
             return "OPERATOR";
         case TokenType::PUNCTUATOR:

@@ -31,43 +31,52 @@ namespace joku::compiler
              */
             IDENTIFIER = 4,
             /**
-             * @brief A token that represents a literal, otherwise known as
-             * something that can be saved on stack.
-             * EG: `1` in `var x = 1;`
+             * @brief A token that represents a literal char.
+             * EG: `1` in `var x = '1';`
              */
-            LITERAL = 5,
+            LITERAL_CHAR = 5,
+            /**
+             * @brief A token that represents an operator.
+             * EG: `+` in `var x = 1 + 2;`
+             */
+            LITERAL_STRING = 6,
+            /**
+             * @brief A token that represents a literal number or integer.
+             */
+            LITERAL_NUMBER = 7,
             /**
              * @brief A specific character that specifies an operation.
              * EG: `+` in `var x = 1 + 1;`
              */
-            OPERATOR = 6,
+            OPERATOR,
             /**
              * @brief A specific character that is not specifically related to a operation
              * but performs a specific action.
              * EG: `..` in `var x = 0..10;`
+             * EG: `?` in match clause `var x = 0 ? 1 : 2;`
              */
-            PUNCTUATOR = 7,
+            PUNCTUATOR,
             /**
              * @brief Represents the end of a file.
              * Sometimes used in place to prevent errors.
              */
-            END_OF_FILE = 8,
+            END_OF_FILE,
             /**
              * @brief Represents whitespace.
              */
-            WHITESPACE = 9,
+            WHITESPACE,
             /**
              * @brief Represents a comment. Specifically Inline or multiline.
              */
-            COMMENT = 10,
+            COMMENT,
             /**
              * @brief Represents a comment, one that is one line.
              */
-            COMMENT_SINGLE = 11,
+            COMMENT_SINGLE,
             /**
              * @brief Unknown Token
              */
-            UNKNOWN = 12,
+            UNKNOWN,
         };
     };
 
