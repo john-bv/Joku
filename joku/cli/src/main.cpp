@@ -27,8 +27,10 @@ int main(int argc, char* argv[])
     while (!stream->is_eof())
     {
         Token token = stream->peek().value();
-        printf("[Token:%s] %s\n", token.get_variant(), token.get_value().c_str());
+        printf("[Token:%s] %s\n", token.get_name().c_str(), token.get_value().c_str());
     }
+
+    printf("Done\n");
 
     return 0;
 }

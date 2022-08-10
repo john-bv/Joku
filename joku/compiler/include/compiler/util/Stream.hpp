@@ -42,7 +42,7 @@ namespace joku::compiler
             /**
              * @brief The last Item that was read.
              */
-            Item *last_item;
+            std::optional<Item> last_item;
 
             /**
              * @brief Consumes the Item in the stream, giving you the next Item.
@@ -89,13 +89,13 @@ namespace joku::compiler
             bool toggle_lock()
             {
                 this->allow_resize = !this->allow_resize;
-                return this->allow_resize;
+                return !!this->allow_resize;
             }
 
             bool lock()
             {
                 this->allow_resize = false;
-                return this->allow_resize;
+                return !!this->allow_resize;
             }
 
             bool unlock()
@@ -155,8 +155,14 @@ namespace joku::compiler
             /**
              * @brief Returns the third item in the stream without consuming it.
              */
-            Item *third() {
+            Item *third()
+            {
                 return nth(2);
+            }
+
+            std::optional<Item> prev()
+            {
+                return last_item;
             }
 
             /**

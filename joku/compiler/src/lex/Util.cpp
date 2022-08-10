@@ -101,4 +101,70 @@ namespace joku::compiler::lexer
             return std::nullopt;
         }
     }
+
+    // Eats a indentifier from the given stream.
+    // Keep in mind that these can NOT be keywords.
+    // While a keyword as a identifier may not error at this stage,
+    // it will error later on.
+    std::optional<Token> consume_identifier(Stream<char> *stream)
+    {
+        char *c = stream->first();
+        if (!isalpha(*c))
+        {
+            return std::nullopt;
+        }
+        POS_START(stream);
+        std::vector<char> values = stream->consume_while([](char c){ return isalnum(c) || c == '_'; });
+        POS_END(stream);
+        std::string segment(values.begin(), values.end());
+        return INIT_TOKEN(segment, TokenType::IDENTIFIER);
+    }
+
+    /**
+     * @brief Consumes a literal from the stream.
+     *
+     * Here we're mainly concerned about the following:
+     * - strings
+     * - numbers
+     * - chars
+     *
+     * Keep in mind these values aren't actually parsed, just identified.
+     */
+    std::optional<Token> consume_literal(Stream<char> *stream)
+    {
+        // first lets check chars and strings
+        char *c = stream->first();
+
+        if (*c == '\'')
+        {
+            // This is a char literal.
+            stream->peek(); // we don't need the ' in the token
+            POS_START(stream);
+            std::vector<char> values = stream->consume_while([&](char c){
+                if (c == '\'')
+                {
+                    // check if the previous char is a `\`
+                    if (stream->prev().has_value() && (stream->prev().value() == '\\'))
+                    {
+                        return true;
+                    }
+
+                    // we need an extra peek here.
+                    stream->peek();
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            });
+            POS_END(stream);
+            std::string segment(values.begin(), values.end());
+            return INIT_TOKEN(segment, TokenType::LITERAL_CHAR);
+        }
+        else
+        {
+            return std::nullopt;
+        }
+    }
 };

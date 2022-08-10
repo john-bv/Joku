@@ -15,6 +15,7 @@ Stream<Token> *joku::compiler::tokenizer::tokenize_str(char *str, int len)
     // who needs token streams anyway???
     // TokenStream *stream = new TokenStream();
     Stream<Token> *stream = new Stream<Token>();
+    stream->unlock();
 
     int last_pos = -1;
 
@@ -32,13 +33,17 @@ Stream<Token> *joku::compiler::tokenizer::tokenize_str(char *str, int len)
 
         // debug source_buff->get_position();
 
-        if (
+        if
+        (
             (token = consume_whitespace(source_buff)).has_value() ||
             (token = consume_comment(source_buff)).has_value() ||
-            (token = consume_op(source_buff)).has_value())
+            (token = consume_op(source_buff)).has_value() ||
+            (token = consume_identifier(source_buff)).has_value() ||
+            (token = consume_literal(source_buff)).has_value()
+        )
         {
-            printf("Token [%s]: %s\n", token.value().get_value().c_str(), token.value().get_name().c_str());
             stream->push(token.value());
+
         }
         else
         {
@@ -48,6 +53,9 @@ Stream<Token> *joku::compiler::tokenizer::tokenize_str(char *str, int len)
             Token tk = Token(std::string{v}, TokenType::UNKNOWN, source_buff->get_position()-1, source_buff->get_position());
         }
     }
-    printf("Woah, done!\n");
+
+    // No more writing to the stream.
+    stream->lock();
+
     return stream;
 }
