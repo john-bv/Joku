@@ -11,6 +11,8 @@ compile_commands.json
 CTestTestfile.cmake
 _deps
 
+.DS_Store
+
 # Prerequisites
 *.d
 
