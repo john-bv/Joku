@@ -1,4 +1,3 @@
-#include <vector>
 #include "compiler/lex/Token.h"
 
 using namespace joku::compiler;
@@ -30,10 +29,12 @@ std::string Token::get_name()
 {
     switch (this->variant)
     {
-        case TokenType::END_OF_FILE:
-            return "END_OF_FILE";
         case TokenType::WHITESPACE:
             return "WHITESPACE";
+        case TokenType::COLON:
+            return "COLON";
+        case TokenType::KEYWORD:
+            return "KEYWORD";
         case TokenType::COMMENT:
             return "COMMENT";
         case TokenType::COMMENT_SINGLE:
@@ -72,6 +73,8 @@ std::string Token::get_name()
             return "REVERSE_SLASH";
         case TokenType::PUNCTUATOR:
             return "PUNCTUATOR";
+        case TokenType::END_OF_FILE:
+            return "END_OF_FILE";
         default:
             return "UNKNOWN";
     }

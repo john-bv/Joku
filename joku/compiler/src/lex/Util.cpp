@@ -3,11 +3,6 @@
  * You should not be using any macros in here.
  */
 #include "compiler/lex/Util.h"
-#include "compiler/lex/Tokenize.h"
-#include "compiler/lex/TokenTypes.h"
-#include <vector>
-#include <iostream>
-#include <optional>
 
 #define POS_START(stream) \
     int start = stream->get_position();
@@ -109,6 +104,34 @@ namespace joku::compiler::lexer
         }
     }
 
+    std::optional<Token> consume_keyword(Stream<char> *stream)
+    {
+        std::string stack = "";
+
+        // this is a segment that will be used to construct the keyword (if valid)
+        for (int i = 0; i < kw::MAX_KEYWORD_LENGTH; i++)
+        {
+            char *next = stream->nth(i);
+
+            if (next == nullptr) break;
+            if (!isalpha(*next)) break;
+
+            stack.push_back(*next);
+
+            std::optional<kw::Keyword> word = kw::keyword_from_str(&stack);
+
+            if (word.has_value())
+            {
+                POS_START(stream);
+                stream->peek(i);
+                POS_END(stream);
+                return INIT_TOKEN(stack, TokenType::KEYWORD);
+            }
+        }
+
+        return std::nullopt;
+    }
+
     // Eats a indentifier from the given stream.
     // Keep in mind that these can NOT be keywords.
     // While a keyword as a identifier may not error at this stage,
@@ -128,16 +151,6 @@ namespace joku::compiler::lexer
         return INIT_TOKEN(values, TokenType::IDENTIFIER);
     }
 
-    /**
-     * @brief Consumes a literal from the stream.
-     *
-     * Here we're mainly concerned about the following:
-     * - strings
-     * - numbers
-     * - chars
-     *
-     * Keep in mind these values aren't actually parsed, just identified.
-     */
     std::optional<Token> consume_literal(Stream<char> *stream)
     {
         // first lets check chars and strings
@@ -212,6 +225,78 @@ namespace joku::compiler::lexer
             POS_END(stream);
 
             return INIT_TOKEN(values, TokenType::LITERAL_NUMBER);
+        }
+        else
+        {
+            return std::nullopt;
+        }
+    }
+
+    std::optional<Token> consume_reserved(Stream<char> *stream)
+    {
+        char *c = stream->first();
+
+        char reserved[] = {'[', ']', '{', '}', '(', ')', ';', ':', ',', '.'};
+
+        // this is a little hacky, but bare with it
+        if (*c == '.' || *c == ':')
+        {
+            // we need to check the second char.
+            char *second = stream->second();
+
+            if (second != nullptr && *second == '.' && *c == '.')
+            {
+                // this is a double dot.
+                POS_START(stream);
+                stream->peek(2);
+                POS_END(stream);
+
+                return INIT_TOKEN("..", TokenType::ACCESSOR);
+            }
+            else if (second != nullptr && *second == ':' && *c == ':')
+            {
+                // this is a double colon.
+                POS_START(stream);
+                stream->peek();
+                POS_END(stream);
+                return INIT_TOKEN("::", TokenType::OPERATOR);
+            }
+        }
+
+        if (std::end(reserved) != std::find(std::begin(reserved), std::end(reserved), *c))
+        {
+            // this char is in the reserved array, we can return it.
+            POS_START(stream);
+            stream->peek();
+            POS_END(stream);
+            // these are all one length, so a switch will suffice.
+            switch(*c)
+            {
+                case '[':
+                    return INIT_TOKEN("[", TokenType::LEFT_BRACKET);
+                case ']':
+                    return INIT_TOKEN("]", TokenType::RIGHT_BRACKET);
+                case '{':
+                    return INIT_TOKEN("{", TokenType::LEFT_BRACE);
+                case '}':
+                    return INIT_TOKEN("}", TokenType::RIGHT_BRACE);
+                case '(':
+                    return INIT_TOKEN("(", TokenType::LEFT_PAREN);
+                case ')':
+                    return INIT_TOKEN(")", TokenType::RIGHT_PAREN);
+                case ';':
+                    return INIT_TOKEN(";", TokenType::STATEMENT_END);
+                case ':':
+                    return INIT_TOKEN(":", TokenType::COLON);
+                case ',':
+                    return INIT_TOKEN(",", TokenType::COMMA);
+                case '.':
+                    return INIT_TOKEN(".", TokenType::ACCESSOR);
+                default:
+                    // This is an error because if this condition is ever reached,
+                    // there is a bug in the code.
+                    throw new std::exception();
+            }
         }
         else
         {

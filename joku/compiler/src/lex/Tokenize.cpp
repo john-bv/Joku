@@ -1,9 +1,4 @@
 #include "compiler/lex/Tokenize.h"
-#include "compiler/lex/TokenTypes.h"
-#include "compiler/lex/Util.h"
-#include <vector>
-#include <iostream>
-#include <optional>
 
 using namespace joku::compiler;
 using namespace joku::compiler::lexer;
@@ -38,8 +33,10 @@ Stream<Token> *joku::compiler::tokenizer::tokenize_str(char *str, int len)
             (token = consume_whitespace(source_buff)).has_value() ||
             (token = consume_comment(source_buff)).has_value() ||
             (token = consume_op(source_buff)).has_value() ||
+            (token = consume_keyword(source_buff)).has_value() ||
             (token = consume_identifier(source_buff)).has_value() ||
-            (token = consume_literal(source_buff)).has_value()
+            (token = consume_literal(source_buff)).has_value() ||
+            (token = consume_reserved(source_buff)).has_value()
         )
         {
             stream->push(token.value());
