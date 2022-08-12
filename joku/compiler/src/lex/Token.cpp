@@ -50,6 +50,26 @@ std::string Token::get_name()
             return "LITERAL_NUMBER";
         case TokenType::OPERATOR:
             return "OPERATOR";
+        case TokenType::ACCESSOR:
+            return "ACCESSOR";
+        case TokenType::LEFT_BRACKET:
+            return "LEFT_BRACKET";
+        case TokenType::RIGHT_BRACKET:
+            return "RIGHT_BRACKET";
+        case TokenType::LEFT_PAREN:
+            return "LEFT_PAREN";
+        case TokenType::RIGHT_PAREN:
+            return "RIGHT_PAREN";
+        case TokenType::LEFT_BRACE:
+            return "LEFT_BRACE";
+        case TokenType::RIGHT_BRACE:
+            return "RIGHT_BRACE";
+        case TokenType::STATEMENT_END:
+            return "STATEMENT_END";
+        case TokenType::COMMA:
+            return "COMMA";
+        case TokenType::REVERSE_SLASH:
+            return "REVERSE_SLASH";
         case TokenType::PUNCTUATOR:
             return "PUNCTUATOR";
         default:

@@ -1,3 +1,7 @@
+/**
+ * @warning Stay clear of anything in here. this is internal api for a reason.
+ * You should not be using any macros in here.
+ */
 #include "compiler/lex/Util.h"
 #include "compiler/lex/Tokenize.h"
 #include "compiler/lex/TokenTypes.h"
@@ -9,6 +13,9 @@
     int start = stream->get_position();
 #define POS_END(stream) \
     int end = stream->get_position();
+#define CONSUME_STD_STRING(name, stream, cb) \
+    std::vector<char> _vals = stream->consume_while(cb); \
+    std::string name = std::string(_vals.begin(), _vals.end()); \
 
 /**
  * @brief This macro ASSUMES that POS_START and POS_END have been called.
@@ -48,18 +55,18 @@ namespace joku::compiler::lexer
             if (stream->first() != nullptr && *stream->first() == '/')
             {
                 stream->peek();
-                std::vector<char> values = stream->consume_while([&](char c){ return c != '\n'; });
+                CONSUME_STD_STRING(values, stream, [&](char c){ return c != '\n'; });
                 POS_END(stream);
-                std::string segment(values.begin(), values.end());
-                return INIT_TOKEN(segment, TokenType::COMMENT_SINGLE);
+
+                return INIT_TOKEN(values, TokenType::COMMENT_SINGLE);
             }
             else if (stream->first() != nullptr && *stream->first() == '*')
             {
                 stream->peek();
-                std::vector<char> values = stream->consume_while([&](char c){ return c != '*'; });
+                CONSUME_STD_STRING(values, stream, [&](char c){ return c != '*'; });
                 POS_END(stream);
-                std::string segment(values.begin(), values.end());
-                return INIT_TOKEN(segment, TokenType::COMMENT);
+
+                return INIT_TOKEN(values, TokenType::COMMENT);
             }
             else
             {
@@ -70,10 +77,10 @@ namespace joku::compiler::lexer
         {
             POS_START(stream);
             stream->peek();
-            std::vector<char> values = stream->consume_while([](char c){ return c != '\n'; });
+            CONSUME_STD_STRING(values, stream, [](char c){ return c != '\n'; });
             POS_END(stream);
-            std::string segment(values.begin(), values.end());
-            return INIT_TOKEN(segment, TokenType::COMMENT_SINGLE);
+
+            return INIT_TOKEN(values, TokenType::COMMENT_SINGLE);
         }
         else
         {
@@ -113,11 +120,12 @@ namespace joku::compiler::lexer
         {
             return std::nullopt;
         }
+
         POS_START(stream);
-        std::vector<char> values = stream->consume_while([](char c){ return isalnum(c) || c == '_'; });
+        CONSUME_STD_STRING(values, stream, [](char c){ return isalnum(c) || c == '_'; });
         POS_END(stream);
-        std::string segment(values.begin(), values.end());
-        return INIT_TOKEN(segment, TokenType::IDENTIFIER);
+
+        return INIT_TOKEN(values, TokenType::IDENTIFIER);
     }
 
     /**
@@ -140,7 +148,7 @@ namespace joku::compiler::lexer
             // This is a char literal.
             stream->peek(); // we don't need the ' in the token
             POS_START(stream);
-            std::vector<char> values = stream->consume_while([&](char c){
+            CONSUME_STD_STRING(values, stream, [&](char c){
                 if (c == '\'')
                 {
                     // check if the previous char is a `\`
@@ -159,8 +167,51 @@ namespace joku::compiler::lexer
                 }
             });
             POS_END(stream);
-            std::string segment(values.begin(), values.end());
-            return INIT_TOKEN(segment, TokenType::LITERAL_CHAR);
+            return INIT_TOKEN(values, TokenType::LITERAL_CHAR);
+        }
+        else if (*c == '"' || *c == '`')
+        {
+            // the opening char is a double quote or a back tick, we need to peek.
+            char opening = stream->peek().value();
+            POS_START(stream);
+
+            // @returns values = std::string
+            CONSUME_STD_STRING(values, stream, [&](char c) {
+                if (c == opening)
+                {
+                    // check if the previous char is a `\`, if so, this is an escape, and we should not consume it.
+                    if (stream->prev().has_value() && (stream->prev().value() == '\\'))
+                    {
+                        return true;
+                    }
+
+                    // we need an extra peek here.
+                    stream->peek();
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            });
+
+            POS_END(stream);
+
+            return INIT_TOKEN(values, TokenType::LITERAL_STRING);
+        }
+
+        // check if this is a number
+        // Keep in mind, literal numbers are parsed later,
+        // the tokenizer doesn't give a shit about the actual value or what tokens
+        // are next to it.
+        else if (isdigit(*c))
+        {
+            POS_START(stream);
+
+            CONSUME_STD_STRING(values, stream, [](char c){ return isdigit(c); });
+            POS_END(stream);
+
+            return INIT_TOKEN(values, TokenType::LITERAL_NUMBER);
         }
         else
         {

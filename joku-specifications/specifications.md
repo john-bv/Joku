@@ -96,8 +96,6 @@ Some Examples of identifers could be:
 
 ---
 
-
-
 ## Index
 
 1. [Introduction](#introduction)

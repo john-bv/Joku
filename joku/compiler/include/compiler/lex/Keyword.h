@@ -1,7 +1,8 @@
 #ifndef __KEYWORD_H__
 #define __KEYWORD_H__
 
-namespace joku::compiler {
+namespace joku::compiler
+{
     enum Keyword
     {
         Abstract = 0,

@@ -22,6 +22,8 @@ namespace joku::compiler::lexer
     std::optional<Token> consume_punctuator(Stream<char> *stream);
 
     std::optional<Token> consume_keyword(Stream<char> *stream);
+
+    std::optional<Token> consume_reserved(Stream<char> *stream);
 }
 
 #endif
