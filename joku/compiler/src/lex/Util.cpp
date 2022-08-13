@@ -122,8 +122,14 @@ namespace joku::compiler::lexer
 
             if (word.has_value())
             {
+                // we're not done yet!
+                // assert that the next char is a space or a newline
+                char *next_char = stream->nth(i + 1);
+                if (next_char != nullptr && (!isspace(*next_char) || *next_char == ';')) break;
+
                 POS_START(stream);
-                stream->peek(i);
+                // we're peeking i + 1, because we need to account for nth(0)
+                stream->peek(i + 1);
                 POS_END(stream);
                 return INIT_TOKEN(stack, TokenType::KEYWORD);
             }

@@ -1,0 +1,38 @@
+// Compiler flags, do not use outside test scripts
+// it will fail.
+@enable(
+    tests = true,
+    matrices = true,
+    op-overload = true
+)
+
+// Matrix addition
+let matrix_1 = [
+    [1, 3, 5],
+    [6, 4, 3],
+]
+let matrix_2 = [
+    [4, 5, 8],
+    [4, 1, 4],
+    [3, 5, 1]
+]
+
+let matrix_r = [
+    [5, 8, 13],
+    [10, 5, 7],
+    [3, 5, 1]
+]
+
+let char = 't';
+
+test "addition":
+    result = matrix_1 + matrix_2
+
+    # Asserts that the two matrices are the value of matrix_r
+    assert(result, matrix_r)
+end
+
+test "dot_product":
+    result_dot = math.Matrix.dot(matrix_1, matrix_2)
+    result = matrix_1 * matrix_2
+    assert(result, result_dot)

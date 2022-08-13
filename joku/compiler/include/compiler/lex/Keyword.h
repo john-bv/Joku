@@ -58,6 +58,8 @@ namespace joku::compiler::lexer::kw
         TYPE,
         THROW,
         TYPEOF,
+        USE,
+        UNION,
         VAR,
         WHERE,
         WHILE,

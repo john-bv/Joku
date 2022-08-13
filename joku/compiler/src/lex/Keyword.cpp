@@ -5,6 +5,8 @@ using namespace joku::compiler::lexer::kw;
 // I strongly advise against looking at this file, it's messy.
 std::optional<Keyword> joku::compiler::lexer::kw::keyword_from_str(std::string *kww)
 {
+    // I would use `std::find` here, but it's considerably slower than this.
+    // we're making the operation 
     std::string keyword = *kww;
 
     if (keyword == "abstract")
@@ -202,6 +204,10 @@ std::optional<Keyword> joku::compiler::lexer::kw::keyword_from_str(std::string *
     else if (keyword == "typeof")
     {
         return Keyword::TYPEOF;
+    }
+    else if (keyword == "use")
+    {
+        return Keyword::USE;
     }
     else if (keyword == "var")
     {

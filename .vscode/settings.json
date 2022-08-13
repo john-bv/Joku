@@ -63,7 +63,8 @@
         "fstream": "cpp",
         "iomanip": "cpp",
         "stack": "cpp",
-        "array": "cpp"
+        "array": "cpp",
+        "filesystem": "cpp"
     },
     "cmake.sourceDirectory": "${workspaceFolder}/."
 }

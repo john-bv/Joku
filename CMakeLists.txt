@@ -8,6 +8,7 @@ add_definitions(
 
 add_subdirectory(joku/cli)
 add_subdirectory(joku/compiler)
+add_subdirectory(joku/error)
 add_subdirectory(joku/rt)
 
 # add_executable(nvscript ${nvscript_sources})
