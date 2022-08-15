@@ -18,13 +18,9 @@ Err [01]: Type Mismatch when declaring "apples"
    \_ Declaration of "apples" is invalid.
 ```
 
-
-
 Token Error
 
 ```
 Error! Tokenization failed:
 > Illegal token in identifer in [source.joku:10:3]
 ```
-
-
