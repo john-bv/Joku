@@ -101,7 +101,7 @@ namespace joku::compiler::lexer
     {
         char *c = stream->first();
 
-        char puncts[] = {'#', '$', '%', '+', '-', '*', '/', '%', '=', '!', '<', '>', '&', '|', '^', '~', '?'};
+        char puncts[] = {'#', '$', '%', '*', '+', '-',  '/', '%', '=', '!', '<', '>', '&', '|', '^', '~', '?', '_', '@' };
 
         if (std::end(puncts) != std::find(std::begin(puncts), std::end(puncts), *c))
         {

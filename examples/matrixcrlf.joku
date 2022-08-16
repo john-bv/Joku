@@ -39,6 +39,6 @@ test "dot_product":
 
 // this should be a FLOATING point number literal
 a = 0.4323443
-b = 1.3E+90
+b = 1.3E+_cray90
 /**
 This comment never ends!
