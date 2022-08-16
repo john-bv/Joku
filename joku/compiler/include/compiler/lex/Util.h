@@ -18,7 +18,7 @@ namespace joku::compiler::lexer
 
     std::optional<Token> consume_comment(Stream<char> *stream);
 
-    std::optional<Token> consume_op(Stream<char> *stream);
+    std::optional<Token> consume_punctuator(Stream<char> *stream);
 
     std::optional<Token> consume_keyword(Stream<char> *stream);
 

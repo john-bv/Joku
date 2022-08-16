@@ -49,8 +49,6 @@ std::string Token::get_name()
             return "LITERAL_STRING";
         case TokenType::LITERAL_NUMBER:
             return "LITERAL_NUMBER";
-        case TokenType::OPERATOR:
-            return "OPERATOR";
         case TokenType::ACCESSOR:
             return "ACCESSOR";
         case TokenType::LEFT_BRACKET:

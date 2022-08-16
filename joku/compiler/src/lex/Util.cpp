@@ -58,7 +58,20 @@ namespace joku::compiler::lexer
             else if (stream->first() != nullptr && *stream->first() == '*')
             {
                 stream->peek();
-                CONSUME_STD_STRING(values, stream, [&](char c){ return c != '*'; });
+                CONSUME_STD_STRING(values, stream, [&](char c){
+                    if (c != '*')
+                    {
+                        if (stream->second() != nullptr && *stream->second() == '/')
+                        {
+                            return false;
+                        }
+                        else
+                        {
+                            return true;
+                        }
+                    }
+                    return true;
+                });
                 POS_END(stream);
 
                 return INIT_TOKEN(values, TokenType::COMMENT);
@@ -84,19 +97,19 @@ namespace joku::compiler::lexer
     }
 
     // Attempts to eat an operator from the given stream.
-    std::optional<Token> consume_op(Stream<char> *stream)
+    std::optional<Token> consume_punctuator(Stream<char> *stream)
     {
         char *c = stream->first();
 
-        char operations[] = {'+', '-', '*', '/', '%', '=', '!', '<', '>', '&', '|', '^', '~', '?'};
+        char puncts[] = {'#', '$', '%', '+', '-', '*', '/', '%', '=', '!', '<', '>', '&', '|', '^', '~', '?'};
 
-        if (std::end(operations) != std::find(std::begin(operations), std::end(operations), *c))
+        if (std::end(puncts) != std::find(std::begin(puncts), std::end(puncts), *c))
         {
             POS_START(stream);
             char c_seg = stream->peek().value();
             POS_END(stream);
             std::string segment = {c_seg};
-            return INIT_TOKEN(segment, TokenType::OPERATOR);
+            return INIT_TOKEN(segment, TokenType::PUNCTUATOR);
         }
         else
         {
@@ -265,7 +278,7 @@ namespace joku::compiler::lexer
                 POS_START(stream);
                 stream->peek();
                 POS_END(stream);
-                return INIT_TOKEN("::", TokenType::OPERATOR);
+                return INIT_TOKEN("::", TokenType::PUNCTUATOR);
             }
         }
 

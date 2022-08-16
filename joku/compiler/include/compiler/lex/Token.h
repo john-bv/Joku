@@ -41,11 +41,6 @@ namespace joku::compiler
              */
             LITERAL_STRING,
             /**
-             * @brief A specific character that specifies an operation.
-             * EG: `+` in `var x = 1 + 1;`
-             */
-            OPERATOR,
-            /**
              * @brief A token that represents a literal number (eg: int, double, char, etc).
              */
             LITERAL_NUMBER,

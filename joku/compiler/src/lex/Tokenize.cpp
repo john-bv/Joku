@@ -32,7 +32,7 @@ Stream<Token> *joku::compiler::tokenizer::tokenize_str(char *str, int len)
         (
             (token = consume_whitespace(source_buff)).has_value() ||
             (token = consume_comment(source_buff)).has_value() ||
-            (token = consume_op(source_buff)).has_value() ||
+            (token = consume_punctuator(source_buff)).has_value() ||
             (token = consume_keyword(source_buff)).has_value() ||
             (token = consume_identifier(source_buff)).has_value() ||
             (token = consume_literal(source_buff)).has_value() ||
@@ -40,7 +40,6 @@ Stream<Token> *joku::compiler::tokenizer::tokenize_str(char *str, int len)
         )
         {
             stream->push(token.value());
-
         }
         else
         {

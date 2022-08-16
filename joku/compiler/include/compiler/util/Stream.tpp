@@ -139,7 +139,7 @@ std::vector<Item> Stream<Item>::consume_while(std::function<bool(Item)> predicat
 {
     std::vector<Item> consumed;
 
-    while (this->first() != nullptr && (predicate(*(this->first())) == true) && !this->is_eof())
+    while (!this->is_eof() && this->first() != nullptr && (predicate(*(this->first())) == true))
     {
         if (this->first() == nullptr)
         {
@@ -161,7 +161,7 @@ int Stream<Item>::size()
 template<typename Item>
 Item *Stream<Item>::nth()
 {
-    if (this->buff.size() < 1)
+    if (this->buff.size() == 0)
     {
         return nullptr;
     }
@@ -178,9 +178,20 @@ Item* Stream<Item>::nth(int n)
     {
         return nullptr;
     }
+    if (this->buff.size() <= n)
+    {
+        return nullptr;
+    }
     else
     {
+        // try
+        // {
         return &this->buff.at((unsigned int) n);
+        // }
+        // catch(const std::exception& e)
+        // {
+        //     return nullptr;
+        // }
     }
 }
 

@@ -14,7 +14,7 @@ The syntax of Joku is designed to be purposeful and efficient to write in; simil
 
 To view the chapters of the specification [click here](#index)
 
-<h1 id="syntax">2. Syntax</h1>
+<h1 id="syntax">2. Syntax Overview</h1>
 
 The Joku lexer is composed of the following parts:
 
@@ -22,7 +22,7 @@ The Joku lexer is composed of the following parts:
 
 2. [Identifiers](#syntax-identifiers)
 
-3. [Literals]
+3. [Literals](#syntax-literals)
 
 4. [Operators]
 
@@ -89,6 +89,31 @@ Some Examples of identifers could be:
 3. May not contain a zero-width character.
 
 4. Must be present infront of an expression or declaration. 
+
+<h3 id="syntax-literals">
+  2.3 Literals
+</h3>
+
+In Joku a literal is a type of  `expression`. A literal is composed of one token rather than many, making it directly represent a value.
+
+Each literal is a constant expression, meaning that it is evaluted during compilation. A literal is phyiscally one of the following types:
+
+
+
+```rust
+'j'   // char
+"oku" // string
+true  // boolean
+1     // number
+```
+
+It is important to note that numbers or chars are not validated at tokenization.
+
+For example, the following code would pass tokenization but not parsing.
+
+```rust
+x = 0.3EF___+93
+```
 
 ---
 

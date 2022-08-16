@@ -36,3 +36,9 @@ test "dot_product":
     result_dot = math.Matrix.dot(matrix_1, matrix_2)
     result = matrix_1 * matrix_2
     assert(result, result_dot)
+
+// this should be a FLOATING point number literal
+a = 0.4323443
+b = 1.3E+90
+/**
+This comment never ends!
